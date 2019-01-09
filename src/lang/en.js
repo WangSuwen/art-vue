@@ -46,7 +46,8 @@ export default {
     exportZip: 'Export Zip',
     theme: 'Theme',
     clipboardDemo: 'Clipboard',
-    i18n: 'I18n'
+    i18n: 'I18n',
+    socketIO: '聊一聊'
   },
   navbar: {
     logOut: 'Log Out',

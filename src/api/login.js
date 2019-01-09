@@ -1,22 +1,22 @@
-import request from '@/utils/request'
+import request from '@/utils/request';
 
 export function loginByUsername(username, password) {
   const data = {
     username,
     password
-  }
+  };
   return request({
-    url: '/login/login',
+    url: '/auth/login',
     method: 'post',
     data
-  })
+  });
 }
 
 export function logout() {
   return request({
-    url: '/login/logout',
+    url: '/auth/logout',
     method: 'post'
-  })
+  });
 }
 
 export function getUserInfo(token) {
@@ -24,6 +24,6 @@ export function getUserInfo(token) {
     url: '/user/info',
     method: 'get',
     params: { token }
-  })
+  });
 }
 

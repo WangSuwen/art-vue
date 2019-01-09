@@ -1,38 +1,44 @@
-import axios from 'axios'
-import { Message } from 'element-ui'
-import store from '@/store'
-import { getToken } from '@/utils/auth'
+import axios from 'axios';
+import { Message } from 'element-ui';
+import store from '@/store';
+import { getToken } from '@/utils/auth';
 
 const BASE_API = {
   development: 'http://localhost:4040/api/',
   production: ''
-}
+};
 // create an axios instance
 const service = axios.create({
   baseURL: BASE_API[process.env.NODE_ENV || 'production'], // api的base_url
+  withCredentials: 'include',
   timeout: 5000 // request timeout
-})
+});
 
 // request interceptor
 service.interceptors.request.use(config => {
   // Do something before request is sent
   if (store.getters.token) {
-    config.headers['X-Token'] = getToken() // 让每个请求携带token-- ['X-Token']为自定义key 请根据实际情况自行修改
+    config.headers['X-Token'] = getToken(); // 让每个请求携带token-- ['X-Token']为自定义key 请根据实际情况自行修改
   }
-  return config
+  return config;
 }, error => {
   // Do something with request error
-  console.log(error) // for debug
-  Promise.reject(error)
-})
+  console.log(error); // for debug
+  Promise.reject(error);
+});
 
 // respone interceptor
 service.interceptors.response.use(
   response => {
+    debugger;
     if (response && response.data && response.data.data && response.data.code === 200) {
-      return response.data.data
+      return response.data.data;
     } else {
-      Promise.reject(response)
+      Message({
+        message: response.data.msg,
+        type: 'error',
+        duration: 5 * 1000
+      });
     }
   },
   /**
@@ -63,20 +69,18 @@ service.interceptors.response.use(
   //       return response.data;
   //     }
   error => {
-    let errMsg = ''
-    if (error.response.status === 404) {
-      errMsg = '接口未找到'
-    } else if (error.response.status === 500) {
-      errMsg = '系统错误'
+    let errMsg = '';
+    if (error.response.data.code === 404) {
+      errMsg = '接口未找到';
     } else {
-      errMsg = error.response.data.message
+      errMsg = error.response.data.msg;
     }
     Message({
       message: errMsg,
       type: 'error',
       duration: 5 * 1000
-    })
-    return Promise.reject(error)
-  })
+    });
+    return Promise.reject(error);
+  });
 
-export default service
+export default service;

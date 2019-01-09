@@ -166,7 +166,7 @@ module.exports = {
       'avoidEscape': true,
       'allowTemplateLiterals': true
     }],
-    'semi': [2, 'never'],
+    'semi': [2, 'always'], // 语句强制分号结尾
     'semi-spacing': [2, {
       'before': false,
       'after': true
