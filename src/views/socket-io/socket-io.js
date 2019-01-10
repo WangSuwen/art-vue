@@ -4,6 +4,7 @@ import Notify from '@wcjiang/notify';
 
 export default {
   init() {
+    debugger;
     const iNotify = new Notify({
       effect: 'flash',
       audio: {

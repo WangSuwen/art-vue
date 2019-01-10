@@ -42,6 +42,7 @@
 </template>
 
 <script>
+import { setToken, setCookie } from '@/utils/auth';
 import { isvalidUsername } from '@/utils/validate'
 import LangSelect from '@/components/LangSelect'
 import SocialSign from './socialsignin'
@@ -90,7 +91,10 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true;
-          this.$store.dispatch('LoginByUsername', this.loginForm).then(() => {
+          this.$root.loginByUsername(this.loginForm).then((userInfo) => {
+            this.$root.setUserInfoToStorage(userInfo);
+            setCookie('userId', userInfo._id || '');
+            setToken(userInfo.token);
             this.loading = false;
             this.$router.push({ path: '/' });
           }).catch(() => {

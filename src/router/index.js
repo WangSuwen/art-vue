@@ -28,42 +28,43 @@ import Layout from '../views/layout/Layout';
   }
 **/
 export const constantRouterMap = [
-  { path: '/login', component: _import('login/index'), hidden: true },
-  { path: '/authredirect', component: _import('login/authredirect'), hidden: true },
-  { path: '/404', component: _import('errorPage/404'), hidden: true },
-  { path: '/401', component: _import('errorPage/401'), hidden: true },
   {
     path: '',
     component: Layout,
-    redirect: 'dashboard',
+    redirect: '/dashboard',
     children: [{
-      path: 'dashboard',
+      path: '/dashboard',
       component: _import('dashboard/index'),
       name: 'dashboard',
       meta: { title: 'dashboard', icon: 'dashboard', noCache: true }
     }]
   },
+  { path: '/login', component: _import('login/index'), hidden: true },
+  { path: '/authredirect', component: _import('login/authredirect'), hidden: true },
+  { path: '/404', component: _import('errorPage/404'), hidden: true },
+  { path: '/401', component: _import('errorPage/401'), hidden: true },
   {
     path: '/documentation',
     component: Layout,
-    redirect: '/documentation/index',
+    // redirect: '/documentation/index',
     children: [{
       path: 'index',
       component: _import('documentation/index'),
       name: 'documentation',
       meta: { title: 'documentation', icon: 'documentation', noCache: true }
     }]
+  },
+  {
+    path: '/socket-io',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: _import('socket-io/index'),
+        name: 'socketIO',
+        meta: { title: 'socketIO', icon: 'international' }
+      }]
   }
-];
-
-export default new Router({
-  // mode: 'history', // require service support
-  scrollBehavior: () => ({ y: 0 }),
-  routes: constantRouterMap
-});
-
-export const asyncRouterMap = [
-
   /* {
     path: '/permission',
     component: Layout,
@@ -245,16 +246,10 @@ export const asyncRouterMap = [
     component: Layout,
     children: [{ path: 'index', component: _import('i18n-demo/index'), name: 'i18n', meta: { title: 'i18n', icon: 'international' }}]
   }, */
-  {
-    path: '/socket-io',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        component: _import('socket-io/index'),
-        name: 'socketIO',
-        meta: { title: 'socketIO', icon: 'international' }
-      }]
-  },
-  { path: '*', redirect: '/404', hidden: true }
 ];
+
+export default new Router({
+  // mode: 'history', // require service support
+  scrollBehavior: () => ({ y: 0 }),
+  routes: constantRouterMap
+});

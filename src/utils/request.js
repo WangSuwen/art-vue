@@ -30,7 +30,6 @@ service.interceptors.request.use(config => {
 // respone interceptor
 service.interceptors.response.use(
   response => {
-    debugger;
     if (response && response.data && response.data.data && response.data.code === 200) {
       return response.data.data;
     } else {
@@ -82,5 +81,4 @@ service.interceptors.response.use(
     });
     return Promise.reject(error);
   });
-
 export default service;

@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <el-row :gutter="20" style="margin:100px 15px 50px;">
       <el-col :span="12" v-for="(msg, index) in msgs" :key="index">
         <p>{{msg}}</p>
@@ -16,18 +15,15 @@ import SOCKETIO from './socket-io.js'
 export default {
   data() {
     return {
-      msgs: [],
-      users: []
+      msgs: []
     }
   },
   created() {
-    getUserList(50, 1).then(users => {
-      this.users = users;
-      console.log(users);
-    });
+    debugger;
   },
   mounted () {
-    SOCKETIO.init()
+    debugger;
+    SOCKETIO.init();
   },
   destroyed () {
     clearInterval(a_interval);

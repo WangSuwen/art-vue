@@ -1,4 +1,4 @@
-import { asyncRouterMap, constantRouterMap } from '@/router';
+import { constantRouterMap } from '@/router';
 
 /**
  * 递归过滤异步路由表，返回符合用户角色权限的路由表
@@ -7,8 +7,7 @@ import { asyncRouterMap, constantRouterMap } from '@/router';
  */
 function filterAsyncRouter(asyncRouterMap, menus) {
   const accessedRouters = asyncRouterMap.filter(route => {
-    debugger;
-    if (menus.indexOf(route.path) > -1) {
+    if (!route.path || menus.indexOf(route.path) > -1) {
       if (route.children && route.children.length) {
         route.children = filterAsyncRouter(route.children, menus);
       }
@@ -21,30 +20,20 @@ function filterAsyncRouter(asyncRouterMap, menus) {
 
 const permission = {
   state: {
-    routers: constantRouterMap,
-    addRouters: []
+    routers: constantRouterMap
   },
   mutations: {
-    SET_ROUTERS: (state, routers) => {
-      state.addRouters = routers;
-      state.routers = constantRouterMap.concat(routers);
+    SET_ROUTERS: (state, data) => {
+      debugger;
+      const { role, menus } = data;
+      if (role !== 'admin') {
+        state.routers = filterAsyncRouter(constantRouterMap, menus);
+      } else {
+        state.routers = constantRouterMap;
+      }
     }
   },
-  actions: {
-    GenerateRoutes({ commit }, data) {
-      return new Promise(resolve => {
-        const { role, menus } = data;
-        let accessedRouters;
-        if (role === 'admin') {
-          accessedRouters = asyncRouterMap;
-        } else {
-          accessedRouters = filterAsyncRouter(asyncRouterMap, menus);
-        }
-        commit('SET_ROUTERS', accessedRouters);
-        resolve();
-      });
-    }
-  }
+  actions: { }
 };
 
 export default permission;
