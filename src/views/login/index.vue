@@ -79,6 +79,9 @@ export default {
       showDialog: false
     };
   },
+  mounted () {
+    this.$store.dispatch('LogOut');
+  },
   methods: {
     showPwd() {
       if (this.passwordType === 'password') {

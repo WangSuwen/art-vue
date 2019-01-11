@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard-container">
-    <component :is="currentRole"></component>
+    <adminDashboard></adminDashboard>
   </div>
 </template>
 
@@ -11,21 +11,15 @@ import editorDashboard from './editor'
 
 export default {
   name: 'dashboard',
-  components: { adminDashboard, editorDashboard },
+  components: { adminDashboard },
   data() {
-    return {
-      currentRole: 'adminDashboard'
-    }
+    return { };
   },
   computed: {
     ...mapGetters([
       'role'
     ])
   },
-  created() {
-    if (this.role !== 'admin') {
-      this.currentRole = 'editorDashboard'
-    }
-  }
+  created() { }
 }
 </script>

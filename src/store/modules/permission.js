@@ -8,9 +8,6 @@ import { constantRouterMap } from '@/router';
 function filterAsyncRouter(asyncRouterMap, menus) {
   const accessedRouters = asyncRouterMap.filter(route => {
     if (!route.path || menus.indexOf(route.path) > -1) {
-      if (route.children && route.children.length) {
-        route.children = filterAsyncRouter(route.children, menus);
-      }
       return true;
     }
     return false;
@@ -24,7 +21,6 @@ const permission = {
   },
   mutations: {
     SET_ROUTERS: (state, data) => {
-      debugger;
       const { role, menus } = data;
       if (role !== 'admin') {
         state.routers = filterAsyncRouter(constantRouterMap, menus);

@@ -25,3 +25,8 @@ export function getCookie(key, val) {
 export function clearCookie() {
   document.cookie = '';
 }
+
+export function clearStorage() {
+  localStorage.clear();
+  sessionStorage.clear();
+}

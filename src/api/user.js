@@ -1,4 +1,4 @@
-import request from '@/utils/request'
+import request from '@/utils/request';
 
 export function getUserList(limit, currentPage) {
   return request({
@@ -8,6 +8,6 @@ export function getUserList(limit, currentPage) {
       limit,
       currentPage
     }
-  })
+  });
 }
 

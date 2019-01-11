@@ -1,10 +1,10 @@
 import io from 'socket.io-client';
 // 浏览器 消息提醒 组件
 import Notify from '@wcjiang/notify';
+let a_interval;
 
 export default {
   init() {
-    debugger;
     const iNotify = new Notify({
       effect: 'flash',
       audio: {
@@ -16,7 +16,7 @@ export default {
     socket.on('hello-client', function(data) {
       console.log(data);
       let i = 0;
-      setInterval(() => {
+      a_interval = setInterval(() => {
         socket.emit('hello-server', { my: `${i++}--client\`s message` });
       }, 300000000);
     });
@@ -34,5 +34,8 @@ export default {
       });
       // this.msgs.push(msg)
     });
+  },
+  clearAinterval() {
+    clearInterval(a_interval);
   }
 };

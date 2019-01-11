@@ -19,22 +19,23 @@
 
       <el-dropdown class="avatar-container right-menu-item" trigger="click">
         <div class="avatar-wrapper">
+          <span>{{name}}</span>
           <img class="user-avatar" :src="avatar+'?imageView2/1/w/80/h/80'">
           <i class="el-icon-caret-bottom"></i>
         </div>
         <el-dropdown-menu slot="dropdown">
           <router-link to="/">
             <el-dropdown-item>
-              {{$t('navbar.dashboard')}}
+              首页
             </el-dropdown-item>
           </router-link>
-          <a target='_blank' href="https://github.com/PanJiaChen/vue-element-admin/">
+          <!-- <a target='_blank' href="https://github.com/PanJiaChen/vue-element-admin/">
             <el-dropdown-item>
-              {{$t('navbar.github')}}
+              项目地址
             </el-dropdown-item>
-          </a>
+          </a> -->
           <el-dropdown-item divided>
-            <span @click="logout" style="display:block;">{{$t('navbar.logOut')}}</span>
+            <span @click="logout" style="display:block;">退出登录</span>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
@@ -73,7 +74,7 @@ export default {
     },
     logout() {
       this.$store.dispatch('LogOut').then(() => {
-        location.reload()// In order to re-instantiate the vue-router object to avoid bugs
+        location.reload();
       })
     }
   }

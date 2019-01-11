@@ -10,8 +10,8 @@ Vue.use(Router);
 import Layout from '../views/layout/Layout';
 
 /** note: submenu only apppear when children.length>=1
-*   detail see  https://panjiachen.github.io/vue-element-admin-site/#/router-and-nav?id=sidebar
-**/
+ *   detail see  https://panjiachen.github.io/vue-element-admin-site/#/router-and-nav?id=sidebar
+ **/
 
 /**
 * hidden: true                   if `hidden:true` will not show in the sidebar(default is false)
@@ -27,44 +27,85 @@ import Layout from '../views/layout/Layout';
     noCache: true                if true ,the page will no be cached(default is false)
   }
 **/
-export const constantRouterMap = [
-  {
-    path: '',
-    component: Layout,
-    redirect: '/dashboard',
-    children: [{
-      path: '/dashboard',
-      component: _import('dashboard/index'),
-      name: 'dashboard',
-      meta: { title: 'dashboard', icon: 'dashboard', noCache: true }
-    }]
+export const constantRouterMap = [{
+  path: '',
+  component: Layout,
+  redirect: '/dashboard',
+  children: [{
+    path: 'dashboard',
+    component: _import('dashboard/index'),
+    name: 'dashboard',
+    meta: {
+      title: '首页',
+      icon: 'dashboard',
+      noCache: true
+    }
+  }]
+},
+{
+  path: '/documentation',
+  component: Layout,
+  meta: {
+    title: '文档',
+    icon: 'documentation',
+    noCache: true
   },
-  { path: '/login', component: _import('login/index'), hidden: true },
-  { path: '/authredirect', component: _import('login/authredirect'), hidden: true },
-  { path: '/404', component: _import('errorPage/404'), hidden: true },
-  { path: '/401', component: _import('errorPage/401'), hidden: true },
-  {
-    path: '/documentation',
-    component: Layout,
-    // redirect: '/documentation/index',
-    children: [{
+  children: [
+    {
       path: 'index',
       component: _import('documentation/index'),
-      name: 'documentation',
-      meta: { title: 'documentation', icon: 'documentation', noCache: true }
-    }]
-  },
-  {
-    path: '/socket-io',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        component: _import('socket-io/index'),
-        name: 'socketIO',
-        meta: { title: 'socketIO', icon: 'international' }
-      }]
-  }
+      name: 'doc-index',
+      meta: {
+        title: '查看文档',
+        icon: 'documentation',
+        noCache: true
+      }
+    },
+    {
+      path: 'edit',
+      component: _import('documentation/edit'),
+      name: 'doc-edit',
+      meta: {
+        title: '编辑文档',
+        icon: 'documentation',
+        noCache: true
+      }
+    }
+  ]
+},
+{
+  path: '/socket-io',
+  component: Layout,
+  children: [{
+    path: 'index',
+    component: _import('socket-io/index'),
+    name: 'socketIO',
+    meta: {
+      title: '聊一聊',
+      icon: 'international'
+    }
+  }]
+},
+{
+  path: '/login',
+  component: _import('login/index'),
+  hidden: true
+},
+{
+  path: '/authredirect',
+  component: _import('login/authredirect'),
+  hidden: true
+},
+{
+  path: '/404',
+  component: _import('errorPage/404'),
+  hidden: true
+},
+{
+  path: '/401',
+  component: _import('errorPage/401'),
+  hidden: true
+}
   /* {
     path: '/permission',
     component: Layout,
@@ -250,6 +291,8 @@ export const constantRouterMap = [
 
 export default new Router({
   // mode: 'history', // require service support
-  scrollBehavior: () => ({ y: 0 }),
+  scrollBehavior: () => ({
+    y: 0
+  }),
   routes: constantRouterMap
 });

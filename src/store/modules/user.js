@@ -1,23 +1,33 @@
-import loginApi from '@/api/login';
-import { getToken, removeToken, clearCookie } from '@/utils/auth';
+import { getToken, removeToken, clearCookie, clearStorage } from '@/utils/auth';
+
+const defaultUser = {
+  userId: '',
+  token: getToken(),
+  status: '',
+  code: '',
+  name: '',
+  avatar: '',
+  introduction: '',
+  role: '',
+  menus: [],
+  setting: {
+    articlePlatform: []
+  }
+};
 
 const user = {
-  state: {
-    userId: '',
-    token: getToken(),
-    status: '',
-    code: '',
-    name: '',
-    avatar: '',
-    introduction: '',
-    role: '',
-    menus: [],
-    setting: {
-      articlePlatform: []
-    }
-  },
-
+  state: JSON.parse(JSON.stringify(defaultUser)),
   mutations: {
+    SET_USERINFO: (state, userInfo) => {
+      for (const key in userInfo) {
+        state[key] = userInfo[key];
+      }
+    },
+    CLEAR_USERINFO: (state) => {
+      for (const key in defaultUser) {
+        state[key] = defaultUser[key];
+      }
+    },
     SET_CODE: (state, code) => {
       state.code = code;
     },
@@ -56,7 +66,6 @@ const user = {
     //   const username = userInfo.username.trim();
     //   return new Promise((resolve, reject) => {
     //     loginByUsername(username, userInfo.password).then(response => {
-    //       debugger;
     //       this.$root.setMenus(response.menus);
     //       this.$root.setRole(response.role);
     //       setToken(response.token);
@@ -101,16 +110,10 @@ const user = {
 
     // 登出
     LogOut({ commit, state }) {
-      return new Promise((resolve, reject) => {
-        loginApi.logout(state.token).then(() => {
-          commit('SET_ROLES', '');
-          removeToken();
-          clearCookie();
-          resolve();
-        }).catch(error => {
-          reject(error);
-        });
-      });
+      commit('CLEAR_USERINFO');
+      removeToken();
+      clearCookie();
+      clearStorage();
     },
 
     // 前端 登出
