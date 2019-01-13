@@ -20,7 +20,9 @@ function hasPermission(menus, toPath) {
 export function checkMenus(to, next, router, userId) {
   const mixinMethods = router.app.$options.methods;
   const store = router.app.$options.store;
-  if (store.getters.menus.length === 0) {
+  if (store.getters.role === 'admin') {
+    next();
+  } else if (store.getters.menus.length === 0) {
     mixinMethods.getMenuList(userId).then((menuList) => {
       // mixinMethods.setMenus(menuList.menus);
       store.commit('SET_MENUS', menuList.menus);
@@ -28,13 +30,10 @@ export function checkMenus(to, next, router, userId) {
     }).catch(() => {
       console.error('获取用户权限菜单失败');
     });
+  } else if (hasPermission(store.getters.menus, to.path)) {
+    next();
   } else {
-    // 没有动态改变权限的需求可直接next()
-    if (store.getters.role === 'admin' || hasPermission(store.getters.menus, to.path)) {
-      next();
-    } else {
-      next({ path: '/401', replace: true, query: { noGoBack: true }});
-    }
+    next({ path: '/401', replace: true, query: { noGoBack: true }});
   }
 }
 export function setUserInfoToStore(to, next, router) {

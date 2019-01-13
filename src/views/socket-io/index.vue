@@ -87,14 +87,15 @@ export default {
     height: 603px;
   }
   .chat-user-info {
+    height: 60px;
     box-shadow: 0 2px 4px #888888;
-    height: 50px;
-    line-height: 50px;
+    line-height: 60px;
   }
   .user-list {
     background-color: white;
   }
   .user-info {
+    max-height: 60px;
     div {
       display: flex;
       align-items: center;
