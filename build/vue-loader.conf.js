@@ -1,10 +1,11 @@
 'use strict'
-const utils = require('./utils')
+const utils = require('./utils');
 const config = require('../config');
-const isProduction = process.env.NODE_ENV !== 'development'
+const isProduction = process.env.NODE_ENV === "production";
 const sourceMapEnabled = isProduction
-  ? config.build.productionSourceMap
-  : config.dev.cssSourceMap;
+? config.build.productionSourceMap
+: config.dev.cssSourceMap;
+console.log('------------',process.env.NODE_ENV, typeof process.env.NODE_ENV, isProduction);
 
 module.exports = {
   loaders: utils.cssLoaders({

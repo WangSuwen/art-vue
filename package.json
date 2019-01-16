@@ -6,11 +6,10 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "dev": "export NODE_ENV=development && webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
-    "dev:win": "set NODE_ENV=development && webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
+    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "build": "export NODE_ENV=production && export env_config=prod && node build/build.js",
     "build:prod": "export NODE_ENV=production && export env_config=prod && ./node_modules/.bin/webpack --config ./build/webpack.prod.conf.js --progress",
-    "build:prod:win": "set NODE_ENV=production && set env_config=prod && ./node_modules/.bin/webpack --config ./build/webpack.prod.conf.js --progress",
+    "build:prod:win": "set NODE_ENV=production && set env_config=prod&& webpack --config ./build/webpack.prod.conf.js --progress",
     "build:sit": "export NODE_ENV=production && export env_config=sit && node build/build.js",
     "lint": "eslint --ext .js,.vue src",
     "test": "npm run lint"
