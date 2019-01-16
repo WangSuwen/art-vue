@@ -1,10 +1,15 @@
 import io from 'socket.io-client';
 // 浏览器 消息提醒 组件
 import Notify from '@wcjiang/notify';
-let a_interval;
+// let a_interval;
+let chatSocket;
 
 export default {
-  init() {
+  /**
+   * 初始化SocketIO
+   * @param {String} loginUserId 当前登录的用户的ID
+   */
+  init(loginUserId) {
     const iNotify = new Notify({
       effect: 'flash',
       audio: {
@@ -12,15 +17,15 @@ export default {
         file: '/static/media/message_remind.mp3'
       }
     });
-    const socket = io.connect('http://localhost:8008');
-    socket.on('hello-client', function(data) {
+    // 与聊天服务器进行连接
+    chatSocket = io.connect('http://localhost:8008/chat');
+    // 接收到其他用户 从 服务器发来的信息
+    const socketType = `chat:server-sendMsg-to-user:${loginUserId}`;
+    chatSocket.on(socketType, this.receiveMsgFromUserThroughServer);
+    chatSocket.on('hello-client', function(data) {
       console.log(data);
-      let i = 0;
-      a_interval = setInterval(() => {
-        socket.emit('hello-server', { my: `${i++}--client\`s message` });
-      }, 300000000);
     });
-    socket.on('server-response', (msg) => {
+    chatSocket.on('server-response', (msg) => {
       iNotify.player();
       iNotify.notify({
         title: '新通知',
@@ -32,10 +37,20 @@ export default {
           console.log('on show');
         }
       });
-      // this.msgs.push(msg)
     });
   },
+  sendMsg(msg) {
+    chatSocket.emit('chat:user-sendMsg', msg);
+  },
+  /**
+   * 接收到其他用户发来的信息
+   * @param {Object} msg
+   */
+  receiveMsgFromUserThroughServer(msg) {
+    debugger;
+    console.log('接收到其他用户发来的信息：', msg);
+  },
   clearAinterval() {
-    clearInterval(a_interval);
+    // clearInterval(a_interval);
   }
 };

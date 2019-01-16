@@ -14,10 +14,13 @@
             </div>
           </el-col>
           <el-col class="socket-btn">
-              <textarea placeholder="说点什么..."></textarea>
+              <textarea placeholder="说点什么..." id="msgInput"></textarea>
               <div class="send-btn-content">
                 <span>按钮栏</span>
-                <button class="send-btn">发送</button>
+                <button
+                  class="send-btn"
+                  @click="sendMsg"
+                >发送</button>
               </div>
           </el-col>
         </div>
@@ -68,11 +71,19 @@ export default {
     });
   },
   mounted () {
-    SOCKETIO.init();
+    SOCKETIO.init(this.$store.state.user._id);
   },
   methods: {
     selectUser(user) {
       this.activeUser = user;
+    },
+    sendMsg () {
+      const msg = document.getElementById('msgInput').value;
+      SOCKETIO.sendMsg({
+        sendUserId: this.$store.state.user._id,
+        receiveUserId: this.activeUser._id,
+        content: msg
+      });
     }
   },
   destroyed () {
