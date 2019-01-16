@@ -1,6 +1,6 @@
 'use strict'
 const path = require('path')
-const config = require('../config')
+const config = require('../config');
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const packageConfig = require('../package.json')
 
@@ -95,7 +95,7 @@ exports.createNotifierCallback = () => {
       title: packageConfig.name,
       message: severity + ': ' + error.name,
       subtitle: filename || '',
-      icon: path.join(__dirname, 'logo.png')
+      icon: path.join(__dirname, 'logo1.png')
     })
   }
 }
