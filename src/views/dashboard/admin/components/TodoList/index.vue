@@ -24,22 +24,19 @@
           <a :class="{ selected: visibility === key }" @click.prevent="visibility = key">{{ key | capitalize }}</a>
         </li>
       </ul>
-      <!-- <button class="clear-completed" v-show="todos.length > remaining" @click="clearCompleted">
-        Clear completed
-      </button> -->
     </footer>
   </section>
 </template>
 
 <script>
-import Todo from './Todo.vue'
+import Todo from './Todo.vue';
 
-const STORAGE_KEY = 'todos'
+const STORAGE_KEY = 'todos';
 const filters = {
   all: todos => todos,
   active: todos => todos.filter(todo => !todo.done),
   completed: todos => todos.filter(todo => todo.done)
-}
+};
 const defalutList = [
   { text: 'star this repository', done: false },
   { text: 'fork this repository', done: false },
@@ -49,7 +46,7 @@ const defalutList = [
   { text: 'element-ui', done: true },
   { text: 'axios', done: true },
   { text: 'webpack', done: true }
-]
+];
 export default {
   components: { Todo },
   data() {
