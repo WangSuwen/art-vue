@@ -5,7 +5,7 @@ import { getToken } from '@/utils/auth';
 
 const BASE_API = {
   development: 'http://localhost:4040/api/',
-  production: ''
+  production: 'http://artvue.loveruoxi.com/api/'
 };
 // create an axios instance
 const service = axios.create({
