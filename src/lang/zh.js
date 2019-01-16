@@ -132,4 +132,4 @@ export default {
     closeOthers: '关闭其它',
     closeAll: '关闭所有'
   }
-}
+};

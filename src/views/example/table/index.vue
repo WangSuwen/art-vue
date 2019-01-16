@@ -11,8 +11,8 @@ export default {
   name: 'TableMain',
   computed: {
     cachedViews() {
-      return this.$store.state.tagsView.cachedViews
+      return this.$store.state.tagsView.cachedViews;
     }
   }
-}
+};
 </script>

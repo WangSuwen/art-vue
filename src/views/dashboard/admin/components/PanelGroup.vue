@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import CountTo from 'vue-count-to'
+import CountTo from 'vue-count-to';
 
 export default {
   components: {
@@ -56,10 +56,10 @@ export default {
   },
   methods: {
     handleSetLineChartData(type) {
-      this.$emit('handleSetLineChartData', type)
+      this.$emit('handleSetLineChartData', type);
     }
   }
-}
+};
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>

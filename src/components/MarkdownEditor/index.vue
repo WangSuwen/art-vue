@@ -6,9 +6,9 @@
 </template>
 
 <script>
-import 'font-awesome/css/font-awesome.min.css'
-import 'simplemde/dist/simplemde.min.css'
-import SimpleMDE from 'simplemde'
+import 'font-awesome/css/font-awesome.min.css';
+import 'simplemde/dist/simplemde.min.css';
+import SimpleMDE from 'simplemde';
 
 export default {
   name: 'simplemde-md',
@@ -41,12 +41,12 @@ export default {
     return {
       simplemde: null,
       hasChange: false
-    }
+    };
   },
   watch: {
     value(val) {
-      if (val === this.simplemde.value() && !this.hasChange) return
-      this.simplemde.value(val)
+      if (val === this.simplemde.value() && !this.hasChange) return;
+      this.simplemde.value(val);
     }
   },
   mounted() {
@@ -61,22 +61,22 @@ export default {
       },
       // hideIcons: ['guide', 'heading', 'quote', 'image', 'preview', 'side-by-side', 'fullscreen'],
       placeholder: this.placeholder
-    })
+    });
     if (this.value) {
-      this.simplemde.value(this.value)
+      this.simplemde.value(this.value);
     }
     this.simplemde.codemirror.on('change', () => {
       if (this.hasChange) {
-        this.hasChange = true
+        this.hasChange = true;
       }
-      this.$emit('input', this.simplemde.value())
-    })
+      this.$emit('input', this.simplemde.value());
+    });
   },
   destroyed() {
-    this.simplemde.toTextArea()
-    this.simplemde = null
+    this.simplemde.toTextArea();
+    this.simplemde = null;
   }
-}
+};
 </script>
 
 <style scoped>

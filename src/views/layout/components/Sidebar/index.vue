@@ -7,9 +7,9 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import SidebarItem from './SidebarItem'
-import ScrollBar from '@/components/ScrollBar'
+import { mapGetters } from 'vuex';
+import SidebarItem from './SidebarItem';
+import ScrollBar from '@/components/ScrollBar';
 
 export default {
   components: { SidebarItem, ScrollBar },
@@ -19,8 +19,8 @@ export default {
       'sidebar'
     ]),
     isCollapse() {
-      return !this.sidebar.opened
+      return !this.sidebar.opened;
     }
   }
-}
+};
 </script>

@@ -3,8 +3,8 @@
 </template>
 
 <script>
-import echarts from 'echarts'
-import resize from './mixins/resize'
+import echarts from 'echarts';
+import resize from './mixins/resize';
 
 export default {
   mixins: [resize],
@@ -29,29 +29,29 @@ export default {
   data() {
     return {
       chart: null
-    }
+    };
   },
   mounted() {
-    this.initChart()
+    this.initChart();
   },
   beforeDestroy() {
     if (!this.chart) {
-      return
+      return;
     }
-    this.chart.dispose()
-    this.chart = null
+    this.chart.dispose();
+    this.chart = null;
   },
   methods: {
     initChart() {
-      this.chart = echarts.init(document.getElementById(this.id))
+      this.chart = echarts.init(document.getElementById(this.id));
 
-      const xAxisData = []
-      const data = []
-      const data2 = []
+      const xAxisData = [];
+      const data = [];
+      const data2 = [];
       for (let i = 0; i < 50; i++) {
-        xAxisData.push(i)
-        data.push((Math.sin(i / 5) * (i / 5 - 10) + i / 6) * 5)
-        data2.push((Math.sin(i / 5) * (i / 5 + 10) + i / 6) * 3)
+        xAxisData.push(i);
+        data.push((Math.sin(i / 5) * (i / 5 - 10) + i / 6) * 5);
+        data2.push((Math.sin(i / 5) * (i / 5 + 10) + i / 6) * 3);
       }
       this.chart.setOption(
         {
@@ -140,13 +140,13 @@ export default {
           animationEasing: 'elasticOut',
           animationEasingUpdate: 'elasticOut',
           animationDelay(idx) {
-            return idx * 20
+            return idx * 20;
           },
           animationDelayUpdate(idx) {
-            return idx * 20
+            return idx * 20;
           }
-        })
+        });
     }
   }
-}
+};
 </script>

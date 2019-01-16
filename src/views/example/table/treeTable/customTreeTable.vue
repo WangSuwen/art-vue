@@ -39,8 +39,8 @@
   Auth: Lei.j1ang
   Created: 2018/1/19-14:54
 */
-import treeTable from '@/components/TreeTable'
-import treeToArray from './customEval'
+import treeTable from '@/components/TreeTable';
+import treeToArray from './customEval';
 
 export default {
   name: 'customTreeTableDemo',
@@ -125,12 +125,12 @@ export default {
           ]
         },
       args: [null, null, 'timeLine']
-    }
+    };
   },
   methods: {
     message(row) {
-      this.$message.info(row.event)
+      this.$message.info(row.event);
     }
   }
-}
+};
 </script>

@@ -3,8 +3,8 @@
 </template>
 
 <script>
-import echarts from 'echarts'
-import resize from './mixins/resize'
+import echarts from 'echarts';
+import resize from './mixins/resize';
 
 export default {
   mixins: [resize],
@@ -29,21 +29,21 @@ export default {
   data() {
     return {
       chart: null
-    }
+    };
   },
   mounted() {
-    this.initChart()
+    this.initChart();
   },
   beforeDestroy() {
     if (!this.chart) {
-      return
+      return;
     }
-    this.chart.dispose()
-    this.chart = null
+    this.chart.dispose();
+    this.chart = null;
   },
   methods: {
     initChart() {
-      this.chart = echarts.init(document.getElementById(this.id))
+      this.chart = echarts.init(document.getElementById(this.id));
 
       this.chart.setOption({
         backgroundColor: '#394056',
@@ -220,8 +220,8 @@ export default {
           },
           data: [220, 182, 125, 145, 122, 191, 134, 150, 120, 110, 165, 122]
         }]
-      })
+      });
     }
   }
-}
+};
 </script>

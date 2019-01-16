@@ -40,8 +40,8 @@
 </template>
 
 <script>
-import { getUserList } from '@/api/user'
-import SOCKETIO from './socket-io.js'
+import { getUserList } from '@/api/user';
+import SOCKETIO from './socket-io.js';
 
 export default {
   data() {
@@ -51,7 +51,7 @@ export default {
       currentPage: 1,
       limit: 10,
       msgs: []
-    }
+    };
   },
   created() {
     getUserList().then(users => {
@@ -59,7 +59,7 @@ export default {
       this.currentPage = users.currentPage;
     });
   },
-  mounted () {
+  mounted() {
     SOCKETIO.init();
   },
   methods: {
@@ -67,11 +67,11 @@ export default {
       this.activeUser = user;
     }
   },
-  destroyed () {
+  destroyed() {
     SOCKETIO.clearAinterval();
   },
   computed: {}
-}
+};
 </script>
 
 <style scoped lang="scss">

@@ -33,44 +33,44 @@ export default {
       height: undefined,
       child: null,
       stickyHeight: 0
-    }
+    };
   },
   mounted() {
-    this.height = this.$el.getBoundingClientRect().height
-    window.addEventListener('scroll', this.handleScroll)
+    this.height = this.$el.getBoundingClientRect().height;
+    window.addEventListener('scroll', this.handleScroll);
   },
   activated() {
-    this.handleScroll()
+    this.handleScroll();
   },
   destroyed() {
-    window.removeEventListener('scroll', this.handleScroll)
+    window.removeEventListener('scroll', this.handleScroll);
   },
   methods: {
     sticky() {
       if (this.active) {
-        return
+        return;
       }
-      this.position = 'fixed'
-      this.active = true
-      this.width = this.width + 'px'
+      this.position = 'fixed';
+      this.active = true;
+      this.width = this.width + 'px';
     },
     reset() {
       if (!this.active) {
-        return
+        return;
       }
-      this.position = ''
-      this.width = 'auto'
-      this.active = false
+      this.position = '';
+      this.width = 'auto';
+      this.active = false;
     },
     handleScroll() {
-      this.width = this.$el.getBoundingClientRect().width
-      const offsetTop = this.$el.getBoundingClientRect().top
+      this.width = this.$el.getBoundingClientRect().width;
+      const offsetTop = this.$el.getBoundingClientRect().top;
       if (offsetTop <= this.stickyTop) {
-        this.sticky()
-        return
+        this.sticky();
+        return;
       }
-      this.reset()
+      this.reset();
     }
   }
-}
+};
 </script>

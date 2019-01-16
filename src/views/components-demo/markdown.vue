@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import MarkdownEditor from '@/components/MarkdownEditor'
+import MarkdownEditor from '@/components/MarkdownEditor';
 
 const content = `
 **this is test**
@@ -24,7 +24,7 @@ const content = `
 * webpack
 
 ## Simplemde
-`
+`;
 
 export default {
   name: 'markdown-demo',
@@ -33,17 +33,17 @@ export default {
     return {
       content: content,
       html: ''
-    }
+    };
   },
   methods: {
     markdown2Html() {
       import('showdown').then(showdown => {
-        const converter = new showdown.Converter()
-        this.html = converter.makeHtml(this.content)
-      })
+        const converter = new showdown.Converter();
+        this.html = converter.makeHtml(this.content);
+      });
     }
   }
-}
+};
 </script>
 
 

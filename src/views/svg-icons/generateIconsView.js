@@ -3,8 +3,8 @@ const data = {
     iconsMap: []
   },
   generate(iconsMap) {
-    this.state.iconsMap = iconsMap
+    this.state.iconsMap = iconsMap;
   }
-}
+};
 
-export default data
+export default data;

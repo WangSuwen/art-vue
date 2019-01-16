@@ -43,9 +43,9 @@
 
 <script>
 import { setToken, setCookie } from '@/utils/auth';
-import { isvalidUsername } from '@/utils/validate'
-import LangSelect from '@/components/LangSelect'
-import SocialSign from './socialsignin'
+import { isvalidUsername } from '@/utils/validate';
+import LangSelect from '@/components/LangSelect';
+import SocialSign from './socialsignin';
 
 export default {
   components: { LangSelect, SocialSign },
@@ -57,14 +57,14 @@ export default {
       } else {
         callback();
       }
-    }
+    };
     const validatePassword = (rule, value, callback) => {
       if (value.length < 6) {
         callback(new Error('密码不得少于6位'));
       } else {
         callback();
       }
-    }
+    };
     return {
       loginForm: {
         username: 'Diana',
@@ -79,7 +79,7 @@ export default {
       showDialog: false
     };
   },
-  mounted () {
+  mounted() {
     this.$store.dispatch('LogOut');
   },
   methods: {
@@ -102,12 +102,12 @@ export default {
             this.$router.push({ path: '/' });
           }).catch(() => {
             this.loading = false;
-          })
+          });
         } else {
           console.log('error submit!!');
           return false;
         }
-      })
+      });
     },
     afterQRScan() {
       // const hash = window.location.hash.slice(1)
@@ -134,7 +134,7 @@ export default {
   destroyed() {
     // window.removeEventListener('hashchange', this.afterQRScan)
   }
-}
+};
 </script>
 
 <style rel="stylesheet/scss" lang="scss">

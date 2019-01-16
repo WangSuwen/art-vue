@@ -9,14 +9,14 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from 'vuex';
 
 export default{
   name: 'permission',
   data() {
     return {
       switchRoles: ''
-    }
+    };
   },
   computed: {
     ...mapGetters([
@@ -26,9 +26,9 @@ export default{
   watch: {
     switchRoles(val) {
       this.$store.dispatch('ChangeRoles', val).then(() => {
-        this.$router.push({ path: '/permission/index?' + +new Date() })
-      })
+        this.$router.push({ path: '/permission/index?' + +new Date() });
+      });
     }
   }
-}
+};
 </script>

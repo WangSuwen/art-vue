@@ -4,7 +4,7 @@
   </div>
 </template>
 <script>
-import DropdownMenu from '@/components/Share/dropdownMenu'
+import DropdownMenu from '@/components/Share/dropdownMenu';
 
 export default {
   name: 'documentation',
@@ -12,7 +12,7 @@ export default {
   data() {
     return { };
   }
-}
+};
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>

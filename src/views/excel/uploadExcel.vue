@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import UploadExcelComponent from '@/components/UploadExcel/index.vue'
+import UploadExcelComponent from '@/components/UploadExcel/index.vue';
 
 export default {
   name: 'uploadExcel',
@@ -18,13 +18,13 @@ export default {
     return {
       tableData: [],
       tableHeader: []
-    }
+    };
   },
   methods: {
     selected(data) {
-      this.tableData = data.results
-      this.tableHeader = data.header
+      this.tableData = data.results;
+      this.tableHeader = data.header;
     }
   }
-}
+};
 </script>

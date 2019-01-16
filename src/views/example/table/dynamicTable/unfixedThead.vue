@@ -41,7 +41,7 @@ export default {
         }
       ],
       formThead: ['apple', 'banana']
-    }
+    };
   }
-}
+};
 </script>

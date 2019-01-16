@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import tabPane from './components/tabPane'
+import tabPane from './components/tabPane';
 
 export default {
   name: 'tab',
@@ -27,14 +27,14 @@ export default {
       ],
       activeName: 'CN',
       createdTimes: 0
-    }
+    };
   },
   methods: {
     showCreatedTimes() {
-      this.createdTimes = this.createdTimes + 1
+      this.createdTimes = this.createdTimes + 1;
     }
   }
-}
+};
 </script>
 
 <style scoped>

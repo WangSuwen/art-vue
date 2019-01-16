@@ -3,11 +3,11 @@
 </template>
 
 <script>
-import echarts from 'echarts'
-require('echarts/theme/macarons') // echarts theme
-import { debounce } from '@/utils'
+import echarts from 'echarts';
+require('echarts/theme/macarons'); // echarts theme
+import { debounce } from '@/utils';
 
-const animationDuration = 3000
+const animationDuration = 3000;
 
 export default {
   props: {
@@ -27,28 +27,28 @@ export default {
   data() {
     return {
       chart: null
-    }
+    };
   },
   mounted() {
-    this.initChart()
+    this.initChart();
     this.__resizeHanlder = debounce(() => {
       if (this.chart) {
-        this.chart.resize()
+        this.chart.resize();
       }
-    }, 100)
-    window.addEventListener('resize', this.__resizeHanlder)
+    }, 100);
+    window.addEventListener('resize', this.__resizeHanlder);
   },
   beforeDestroy() {
     if (!this.chart) {
-      return
+      return;
     }
-    window.removeEventListener('resize', this.__resizeHanlder)
-    this.chart.dispose()
-    this.chart = null
+    window.removeEventListener('resize', this.__resizeHanlder);
+    this.chart.dispose();
+    this.chart = null;
   },
   methods: {
     initChart() {
-      this.chart = echarts.init(this.$el, 'macarons')
+      this.chart = echarts.init(this.$el, 'macarons');
 
       this.chart.setOption({
         tooltip: {
@@ -113,8 +113,8 @@ export default {
           ],
           animationDuration: animationDuration
         }]
-      })
+      });
     }
   }
-}
+};
 </script>

@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import { fetchList } from '@/api/article'
+import { fetchList } from '@/api/article';
 
 export default {
   props: {
@@ -68,7 +68,7 @@ export default {
         sort: '+id'
       },
       loading: false
-    }
+    };
   },
   filters: {
     statusFilter(status) {
@@ -76,23 +76,23 @@ export default {
         published: 'success',
         draft: 'info',
         deleted: 'danger'
-      }
-      return statusMap[status]
+      };
+      return statusMap[status];
     }
   },
   created() {
-    this.getList()
+    this.getList();
   },
   methods: {
     getList() {
-      this.loading = true
-      this.$emit('create') // for test
+      this.loading = true;
+      this.$emit('create'); // for test
       fetchList(this.listQuery).then(response => {
-        this.list = response.data.items
-        this.loading = false
-      })
+        this.list = response.data.items;
+        this.loading = false;
+      });
     }
   }
-}
+};
 </script>
 
