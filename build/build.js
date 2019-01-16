@@ -11,7 +11,7 @@ const webpackConfig = require('./webpack.prod.conf')
 const server = require('pushstate-server')
 
 var spinner = ora('building for '+ process.env.env_config+ ' environment...' )
-spinner.start()
+spinner.start();
 
 rm(path.join(config.build.assetsRoot, config.build.assetsSubDirectory), err => {
   if (err) throw err
