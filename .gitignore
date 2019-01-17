@@ -1,6 +1,6 @@
 .DS_Store
 node_modules/
-dist/
+# dist/   #暂时注释掉，因为服务器内存不够导致服务器上构建失败，所以只能暂时 在本地构建再上传。
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
