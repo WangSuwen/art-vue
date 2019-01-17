@@ -3,6 +3,13 @@ import io from 'socket.io-client';
 import Notify from '@wcjiang/notify';
 // let a_interval;
 let chatSocket;
+const iNotify = new Notify({
+  effect: 'flash',
+  audio: {
+    // 可以使用数组传多种格式的声音文件
+    file: '/static/media/message_remind.mp3'
+  }
+});
 
 export default {
   /**
@@ -14,34 +21,17 @@ export default {
       development: 'http://localhost:8008',
       production: 'http://artvue.loveruoxi.com:8008'
     };
-    const iNotify = new Notify({
-      effect: 'flash',
-      audio: {
-        // 可以使用数组传多种格式的声音文件
-        file: '/static/media/message_remind.mp3'
-      }
-    });
+    const that = this;
     // 与聊天服务器进行连接
     chatSocket = io.connect(`${BASE_API[process.env.NODE_ENV || 'production']}/chat`);
     // 接收到其他用户 从 服务器发来的信息
     const socketType = `chat:server-sendMsg-to-user:${loginUserId}`;
-    console.log('初始化Socket接收--其他用户通过服务器发来的消息-成功', socketType);
-    chatSocket.on(socketType, this.receiveMsgFromUserThroughServer);
+    chatSocket.on(socketType, this.receiveMsgFromUserThroughServer.bind(this));
     chatSocket.on('hello-client', function(data) {
       console.log(data);
     });
     chatSocket.on('server-response', (msg) => {
-      iNotify.player();
-      iNotify.notify({
-        title: '新通知',
-        body: msg,
-        onclick: function() {
-          window.focus();
-        },
-        onshow: function() {
-          console.log('on show');
-        }
-      });
+      that.playNewMsg(iNotify, msg);
     });
   },
   sendMsg(msg) {
@@ -52,9 +42,19 @@ export default {
    * @param {Object} msg
    */
   receiveMsgFromUserThroughServer(msg) {
-    console.log('接收到其他用户发来的信息：', msg);
+    this.playNewMsg(iNotify);
   },
-  clearAinterval() {
-    // clearInterval(a_interval);
+  playNewMsg(iNotify, msg) {
+    iNotify.player();
+    iNotify.notify({
+      title: '新通知',
+      body: msg,
+      onclick: function() {
+        window.focus();
+      },
+      onshow: function() {
+        console.log('on show');
+      }
+    });
   }
 };

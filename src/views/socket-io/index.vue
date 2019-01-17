@@ -86,9 +86,6 @@ export default {
       });
     }
   },
-  destroyed() {
-    SOCKETIO.clearAinterval();
-  },
   computed: {}
 };
 </script>
