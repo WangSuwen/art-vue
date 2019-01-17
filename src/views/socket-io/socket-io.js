@@ -10,6 +10,10 @@ const iNotify = new Notify({
     file: '/static/media/message_remind.mp3'
   }
 });
+const BASE_API = {
+  development: 'http://localhost:8008',
+  production: 'http://artvue.loveruoxi.com:8008'
+};
 
 export default {
   /**
@@ -17,10 +21,6 @@ export default {
    * @param {String} loginUserId 当前登录的用户的ID
    */
   init(loginUserId) {
-    const BASE_API = {
-      development: 'http://localhost:8008',
-      production: 'http://artvue.loveruoxi.com:8008'
-    };
     const that = this;
     // 与聊天服务器进行连接
     chatSocket = io.connect(`${BASE_API[process.env.NODE_ENV || 'production']}/chat`);
@@ -42,13 +42,13 @@ export default {
    * @param {Object} msg
    */
   receiveMsgFromUserThroughServer(msg) {
-    this.playNewMsg(iNotify);
+    this.playNewMsg(iNotify, msg);
   },
   playNewMsg(iNotify, msg) {
     iNotify.player();
     iNotify.notify({
-      title: '新通知',
-      body: msg,
+      title: msg.sendUserName,
+      body: msg.content,
       onclick: function() {
         window.focus();
       },

@@ -9,9 +9,19 @@
             </div>
           </el-col>
           <el-col class="socket-window">
-            <div>
-
-            </div>
+            <ul>
+              <li
+                v-for="(msg, index) in activeUserMsg"
+                :key="index"
+                :class="msg.sendUserId === loginUserInfo._id ? 'mine' : 'others'"
+              >
+                <img :src="msg.sendUserId === loginUserInfo._id ? loginUserInfo.avatar : activeUser.avatar"/>
+                <div>
+                  <span v-if="msg.sendUserId !== loginUserInfo._id">{{msg.sendUserName}}</span>
+                  <p>{{msg.content}}</p>
+                </div>
+              </li>
+            </ul>
           </el-col>
           <el-col class="socket-btn">
               <textarea placeholder="说点什么..." id="msgInput"></textarea>
@@ -42,11 +52,6 @@
           </div>
         </el-col>
       </el-row>
-      <!-- <el-row :gutter="20" style="margin:100px 15px 50px;">
-        <el-col :span="12" v-for="(msg, index) in msgs" :key="index">
-          <p>{{msg}}</p>
-        </el-col>
-      </el-row> -->
     </div>
 </template>
 
@@ -59,9 +64,10 @@ export default {
     return {
       userList: [],
       activeUser: {},
+      activeUserMsg: [],
+      usersMsgs: {},
       currentPage: 1,
       limit: 10,
-      msgs: []
     };
   },
   created() {
@@ -76,17 +82,39 @@ export default {
   methods: {
     selectUser(user) {
       this.activeUser = user;
+      this.activeUserMsg = this.usersMsgs[user._id];
     },
     sendMsg () {
-      const msg = document.getElementById('msgInput').value;
-      SOCKETIO.sendMsg({
+      const msgInput = document.getElementById('msgInput');
+      const msg = msgInput.value;
+      const msgObj = {
         sendUserId: this.$store.state.user._id,
+        sendUserName: this.$store.state.user.name,
         receiveUserId: this.activeUser._id,
         content: msg
-      });
+      };
+      SOCKETIO.sendMsg(msgObj);
+      this.addSendedMsg(msgObj, this);
+      msgInput.value = '';
+    },
+    addSendedMsg (msgObj) {
+      if (this.activeUserMsg && this.activeUserMsg.length) {
+        this.activeUserMsg.push(msgObj);
+      } else {
+        this.activeUserMsg = [msgObj];
+      }
+      if (this.usersMsgs[msgObj.receiveUserId] && this.usersMsgs[msgObj.receiveUserId].length) {
+        this.usersMsgs[msgObj.receiveUserId].push(msgObj);
+      } else {
+        this.usersMsgs[msgObj.receiveUserId] = [msgObj];
+      }
     }
   },
-  computed: {}
+  computed: {
+    loginUserInfo () {
+      return this.$store.state.user;
+    }
+  }
 };
 </script>
 
@@ -119,8 +147,65 @@ export default {
     height: 60px;
   }
   .socket-window {
-    background-color: white;
+    background-color: #f2f2f2;
     height: 80%;
+    overflow-y: scroll;
+    ul {
+      li {
+        list-style: none;
+        display: flex;
+        margin-bottom: 20px;
+        span {
+          font-size: 14px;
+          margin-bottom: 5px;
+          display: inline-block;
+        }
+        p {
+          position: relative;
+          background-color: white;
+          padding: 5px 4px;
+          margin: 0;
+          border-radius: 4px;
+          min-height: 40px;
+          max-width: 500px;
+          line-height: 40px;
+        }
+      }
+      img {
+        width: 40px;
+        height: 40px;
+        margin-right: 12px;
+      }
+      .others {
+        p::before {
+          content: '';
+          position: absolute;
+          border-top: 6px solid transparent;
+          border-bottom: 6px solid transparent;
+          border-right: 6px solid white;
+          position: absolute;
+          left: -6px;
+        }
+      }
+      .mine {
+        flex-direction: row-reverse;
+        img {
+          margin-left: 12px;
+        }
+        p {
+          background-color: #83bff7 !important;
+        }
+        p::before {
+          content: '';
+          position: absolute;
+          border-top: 6px solid transparent;
+          border-bottom: 6px solid transparent;
+          border-left: 6px solid #83bff7;
+          position: absolute;
+          right: -6px;
+        }
+      }
+    }
   }
   .socket-btn {
     height: 150px;
