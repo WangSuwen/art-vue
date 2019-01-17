@@ -25,6 +25,7 @@ export default {
     chatSocket = io.connect(`${BASE_API[process.env.NODE_ENV || 'production']}/chat`);
     // 接收到其他用户 从 服务器发来的信息
     const socketType = `chat:server-sendMsg-to-user:${loginUserId}`;
+    console.log('初始化Socket接收--其他用户通过服务器发来的消息-成功', socketType);
     chatSocket.on(socketType, this.receiveMsgFromUserThroughServer);
     chatSocket.on('hello-client', function(data) {
       console.log(data);
