@@ -10,6 +10,10 @@ export default {
    * @param {String} loginUserId 当前登录的用户的ID
    */
   init(loginUserId) {
+    const BASE_API = {
+      development: 'http://localhost:8008',
+      production: 'http://artvue.loveruoxi.com/：8008'
+    };
     const iNotify = new Notify({
       effect: 'flash',
       audio: {
@@ -18,7 +22,7 @@ export default {
       }
     });
     // 与聊天服务器进行连接
-    chatSocket = io.connect('http://localhost:8008/chat');
+    chatSocket = io.connect(`${BASE_API[process.env.NODE_ENV || 'production']}/chat`);
     // 接收到其他用户 从 服务器发来的信息
     const socketType = `chat:server-sendMsg-to-user:${loginUserId}`;
     chatSocket.on(socketType, this.receiveMsgFromUserThroughServer);
@@ -47,7 +51,6 @@ export default {
    * @param {Object} msg
    */
   receiveMsgFromUserThroughServer(msg) {
-    debugger;
     console.log('接收到其他用户发来的信息：', msg);
   },
   clearAinterval() {
