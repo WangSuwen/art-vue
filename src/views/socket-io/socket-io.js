@@ -12,7 +12,7 @@ export default {
   init(loginUserId) {
     const BASE_API = {
       development: 'http://localhost:8008',
-      production: 'http://artvue.loveruoxi.com/：8008'
+      production: 'http://artvue.loveruoxi.com:8008'
     };
     const iNotify = new Notify({
       effect: 'flash',
