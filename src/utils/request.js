@@ -11,6 +11,7 @@ const BASE_API = {
 const service = axios.create({
   baseURL: BASE_API[process.env.NODE_ENV || 'production'], // api的base_url
   withCredentials: 'include',
+  headers: { origin: 'http://artvue.loveruoxi.com' },
   timeout: 5000 // request timeout
 });
 
