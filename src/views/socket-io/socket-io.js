@@ -13,7 +13,7 @@ const iNotify = new Notify({
 const BASE_API = {
   development: 'http://localhost:8008',
   // production: 'https://pwa.loveruoxi.com:8008'
-  production: `${location.origin}:8008`
+  production: `${location.origin}`
 };
 
 export default {
