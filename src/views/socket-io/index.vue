@@ -72,7 +72,16 @@ import SOCKETIO from './socket-io.js';
 export default {
   data() {
     return {
-      userList: [],
+      /**
+       * userList: {
+       *  userId: {
+       *    _id: XXX,
+       *    avatar: xxxx,
+       *    ....
+       *  }
+       * }
+       */
+      userList: {},
       activeUser: {},
       activeUserMsg: [],
       /**
@@ -83,18 +92,21 @@ export default {
        * }
        */
       usersMsgs: {},
+      // 主要用于处理 用户未读消息数
       newMsg: {},
       currentPage: 1,
       limit: 10,
     };
   },
   created() {
+    // 获取 用户列表
     getUserList().then(users => {
       this.userList = users.list;
       this.currentPage = users.currentPage;
     });
   },
   mounted () {
+    // 初始化 socket.IO，并将一些需要操作 vue 组件的方法传进去。
     SOCKETIO.init(this.$store.state.user._id, {
       receiveMsgFromUserThroughServer: this.receiveMsgFromUserThroughServer
     });
@@ -137,18 +149,16 @@ export default {
       this.addSendedMsg(msgObj, this);
       msgInput.value = '';
     },
+    // 将发送出的消息 添加到消息列表中
     addSendedMsg (msgObj) {
       if (this.activeUserMsg && this.activeUserMsg.length) {
         this.activeUserMsg.push(msgObj);
       } else {
         this.activeUserMsg = [msgObj];
       }
-      if (this.usersMsgs[msgObj.receiveUserId] && this.usersMsgs[msgObj.receiveUserId]['msgs'].length) {
-        this.usersMsgs[msgObj.receiveUserId] && this.usersMsgs[msgObj.receiveUserId]['msgs'].push(msgObj);
-      } else {
-        this.usersMsgs[msgObj.receiveUserId] = { msgs: [msgObj], unReadCount: 0 };
-      }
+      this.setUsersMsg(msgObj.receiveUserId, msgObj);
     },
+    // 设置 消息列表
     setUsersMsg (receiveUserId, msgObj) {
       if (this.usersMsgs[receiveUserId] && this.usersMsgs[receiveUserId]['msgs'].length) {
         this.usersMsgs[receiveUserId] && this.usersMsgs[receiveUserId]['msgs'].push(msgObj);
