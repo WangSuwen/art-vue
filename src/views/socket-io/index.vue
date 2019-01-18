@@ -152,10 +152,8 @@ export default {
     setUsersMsg (receiveUserId, msgObj) {
       if (this.usersMsgs[receiveUserId] && this.usersMsgs[receiveUserId]['msgs'].length) {
         this.usersMsgs[receiveUserId] && this.usersMsgs[receiveUserId]['msgs'].push(msgObj);
-        this.userList[receiveUserId]['unReadCount'] >= 99 ? '99+' : this.userList[receiveUserId]['unReadCount']++;
       } else {
         this.usersMsgs[receiveUserId] = { msgs: [msgObj] };
-        this.userList[receiveUserId]['unReadCount'] = 1;
       }
     }
   },
