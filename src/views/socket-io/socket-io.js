@@ -46,9 +46,11 @@ export default {
    * @param {Object} msg
    */
   receiveMsgFromUserThroughServer(msg) {
+    // 回调 vue 中传过来的方法，用于操作 消息列表
     this.methods.receiveMsgFromUserThroughServer(msg);
     this.playNewMsg(iNotify, msg);
   },
+  // 播放消息提醒
   playNewMsg(iNotify, msg) {
     iNotify.player();
     iNotify.notify({
