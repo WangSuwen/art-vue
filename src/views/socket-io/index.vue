@@ -37,17 +37,27 @@
       </el-row>
       <el-row class="user-list">
         <el-col
-          v-for="user in userList"
-          :key="user._id"
+          v-for="(user, key) in userList"
+          :key="key"
           class="user-info"
           :class="{active : user._id === activeUser._id}"
         >
-          <div @click="selectUser(user)" style="width: 100%;">
-            <img
-              :src="user.avatar"
-              :alt="user.name"
-              class="user-avatar"
-            >
+          <div
+            @click="selectUser(user)"
+            style="width: 100%;"
+            class="user-info-row"
+          >
+            <div class="user-info-row__avatar">
+              <img
+                :src="user.avatar"
+                :alt="user.name"
+                class="user-avatar"
+              >
+              <span
+                v-if="user.unReadCount"
+                class="unread-count"
+              >{{user.unReadCount}}</span>
+            </div>
             <span class="user-name">{{user.name || '没名字的人'}}</span>
           </div>
         </el-col>
@@ -65,7 +75,15 @@ export default {
       userList: [],
       activeUser: {},
       activeUserMsg: [],
+      /**
+       * usersMsgs: {
+       *  receiveUserId: {
+       *    msgs: []
+       *  }
+       * }
+       */
       usersMsgs: {},
+      newMsg: {},
       currentPage: 1,
       limit: 10,
     };
@@ -77,12 +95,34 @@ export default {
     });
   },
   mounted () {
-    SOCKETIO.init(this.$store.state.user._id);
+    SOCKETIO.init(this.$store.state.user._id, {
+      receiveMsgFromUserThroughServer: this.receiveMsgFromUserThroughServer
+    });
   },
   methods: {
+    /**
+     * 接收到其他用户发来的信息
+     * @param {Object} msg
+     */
+    receiveMsgFromUserThroughServer (msg) {
+      // 如果当前 活跃的窗口正好是信息发送者，则将信息填入 this.activeUserMsg，否则不做任何操作
+      if (msg.sendUserId === this.activeUser._id) {
+        if (this.activeUserMsg && this.activeUserMsg.length) {
+          this.activeUserMsg.push(msg);
+        } else {
+          this.activeUserMsg = [msg];
+        }
+      }
+      // 不论什么情况都将信息填入 消息列表中
+      this.setUsersMsg(msg.sendUserId, msg);
+      this.newMsg = msg;
+    },
     selectUser(user) {
       this.activeUser = user;
-      this.activeUserMsg = this.usersMsgs[user._id];
+      this.activeUserMsg = this.usersMsgs[user._id] ? this.usersMsgs[user._id]['msgs'] : [];
+      const oldThisUserList = JSON.parse(JSON.stringify(this.userList));
+      oldThisUserList[user._id]['unReadCount'] = 0;
+      this.userList = oldThisUserList;
     },
     sendMsg () {
       const msgInput = document.getElementById('msgInput');
@@ -103,11 +143,34 @@ export default {
       } else {
         this.activeUserMsg = [msgObj];
       }
-      if (this.usersMsgs[msgObj.receiveUserId] && this.usersMsgs[msgObj.receiveUserId].length) {
-        this.usersMsgs[msgObj.receiveUserId].push(msgObj);
+      if (this.usersMsgs[msgObj.receiveUserId] && this.usersMsgs[msgObj.receiveUserId]['msgs'].length) {
+        this.usersMsgs[msgObj.receiveUserId] && this.usersMsgs[msgObj.receiveUserId]['msgs'].push(msgObj);
       } else {
-        this.usersMsgs[msgObj.receiveUserId] = [msgObj];
+        this.usersMsgs[msgObj.receiveUserId] = { msgs: [msgObj], unReadCount: 0 };
       }
+    },
+    setUsersMsg (receiveUserId, msgObj) {
+      if (this.usersMsgs[receiveUserId] && this.usersMsgs[receiveUserId]['msgs'].length) {
+        this.usersMsgs[receiveUserId] && this.usersMsgs[receiveUserId]['msgs'].push(msgObj);
+        this.userList[receiveUserId]['unReadCount'] >= 99 ? '99+' : this.userList[receiveUserId]['unReadCount']++;
+      } else {
+        this.usersMsgs[receiveUserId] = { msgs: [msgObj] };
+        this.userList[receiveUserId]['unReadCount'] = 1;
+      }
+    }
+  },
+  watch: {
+    /**
+     * 用于设置用户未读消息数
+     */
+    newMsg(newVal) {
+      const oldThisUserList = JSON.parse(JSON.stringify(this.userList));
+      if (oldThisUserList[newVal.sendUserId] && oldThisUserList[newVal.sendUserId]['unReadCount'] !== undefined) {
+        oldThisUserList[newVal.sendUserId]['unReadCount'] >= 99 ? '99+' : oldThisUserList[newVal.sendUserId]['unReadCount']++;
+      } else {
+        oldThisUserList[newVal.sendUserId]['unReadCount'] = 1;
+      }
+      this.userList = oldThisUserList;
     }
   },
   computed: {
@@ -235,13 +298,30 @@ export default {
   }
   .user-info {
     max-height: 60px;
-    div {
+    .user-info-row {
       display: flex;
       align-items: center;
       cursor: pointer;
       padding: 10px 0;
       padding-left: 10px;
       border-bottom: 1px solid #E4E4E4;
+      &__avatar {
+        position: relative;
+        .unread-count {
+          position: absolute;
+          background-color: red;
+          border-radius: 50%;
+          display: inline-block;
+          width: 20px;
+          height: 20px;
+          color: white;
+          top: -6px;
+          right: -10px;
+          font-size: 10px;
+          text-align: center;
+          line-height: 20px;
+        }
+      }
     }
   }
   .user-avatar {

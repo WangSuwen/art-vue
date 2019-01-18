@@ -12,17 +12,20 @@ const iNotify = new Notify({
 });
 const BASE_API = {
   development: 'http://localhost:8008',
-  // production: 'https://pwa.loveruoxi.com:8008'
   production: `${location.origin}`
 };
 
 export default {
+  methods(ms) {
+    return ms;
+  },
   /**
    * 初始化SocketIO
    * @param {String} loginUserId 当前登录的用户的ID
    */
-  init(loginUserId) {
+  init(loginUserId, methods) {
     const that = this;
+    this.methods = methods;
     // 与聊天服务器进行连接
     chatSocket = io.connect(`${BASE_API[process.env.NODE_ENV || 'production']}/chat`);
     // 接收到其他用户 从 服务器发来的信息
@@ -43,6 +46,7 @@ export default {
    * @param {Object} msg
    */
   receiveMsgFromUserThroughServer(msg) {
+    this.methods.receiveMsgFromUserThroughServer(msg);
     this.playNewMsg(iNotify, msg);
   },
   playNewMsg(iNotify, msg) {
