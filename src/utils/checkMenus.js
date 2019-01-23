@@ -23,9 +23,13 @@ export function checkMenus(to, next, router, userId) {
   if (store.getters.role === 'admin') {
     next();
   } else if (store.getters.menus.length === 0) {
-    mixinMethods.getMenuList(userId).then((menuList) => {
+    mixinMethods.getUserMenuList(userId).then((menuList) => {
       // mixinMethods.setMenus(menuList.menus);
       store.commit('SET_MENUS', menuList.menus);
+      store.commit('SET_ROUTERS', {
+        role: store.getters.role,
+        menus: menuList.menus
+      });
       router.push({ path: '/' });
     }).catch(() => {
       console.error('获取用户权限菜单失败');
@@ -39,8 +43,11 @@ export function checkMenus(to, next, router, userId) {
 export function setUserInfoToStore(to, next, router) {
   const store = router.app.$options.store;
   const mixinMethods = router.app.$options.methods;
-  if (!store.getters.menus.length || !store.getters.role || !store.getters.avatar) {
+  if (!store.getters.menus.length || !store.getters.permission_routers.length ||!store.getters.role || !store.getters.avatar) {
     store.commit('SET_USERINFO', mixinMethods.getUserInfoFromStorage());
-    store.commit('SET_ROUTERS', { role: mixinMethods.getUserInfoFromStorage().role, menus: mixinMethods.getUserInfoFromStorage().menus });
+    store.commit('SET_ROUTERS', {
+      role: mixinMethods.getUserInfoFromStorage().role,
+      menus: mixinMethods.getUserInfoFromStorage().menus
+    });
   }
 }

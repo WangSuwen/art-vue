@@ -20,6 +20,7 @@ const permission = {
     routers: constantRouterMap
   },
   mutations: {
+    // 用户可用的  routers
     SET_ROUTERS: (state, data) => {
       const { role, menus } = data;
       if (role !== 'admin') {

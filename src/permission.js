@@ -9,12 +9,16 @@ NProgress.configure({ showSpinner: false }); // NProgress Configuration
 
 const whiteList = ['/login', '/authredirect', '/401', '/404']; // no redirect whitelist
 
+/**
+ * 路由跳转前，进行权限校验
+ */
+
 router.beforeEach((to, from, next) => {
   NProgress.start(); // 开始进度条
   const access_token = getToken();
   const userId = getCookie('userId');
   // 如果在白名单里，则直接进入
-  if (whiteList.indexOf(to.path) !== -1) {
+  if (whiteList.indexOf(to.path) > -1) {
     next();
   } else if (access_token && userId) { // determine if there has token
     setUserInfoToStore(to, next, router);

@@ -87,6 +87,37 @@ export const constantRouterMap = [{
   }]
 },
 {
+  path: '/menu-ctrl',
+  component: Layout,
+  meta: {
+    title: '菜单管理',
+    icon: 'international',
+    noCache: true
+  },
+  children: [
+    {
+      path: 'index',
+      component: _import('menu-ctrl/index'),
+      name: 'menu-ctrl-index',
+      meta: {
+        title: '编辑菜单',
+        icon: 'international',
+        noCache: true
+      }
+    },
+    {
+      path: 'user-menus',
+      component: _import('menu-ctrl/index'),
+      name: 'menu-ctrl-user-menus',
+      meta: {
+        title: '用户权限菜单',
+        icon: 'international',
+        noCache: true
+      }
+    }
+  ]
+},
+{
   path: '/login',
   component: _import('login/index'),
   hidden: true
