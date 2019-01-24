@@ -26,14 +26,19 @@ const menusApi = {
     });
   },
   // 添加 菜单
-  addMenus({ menuName, menuValue }) {
+  addMenus(data) {
     return request({
       url: '/menus',
       method: 'post',
-      data: {
-        menuName,
-        menuValue
-      }
+      data
+    });
+  },
+  // 修改 菜单
+  updateMenu(data) {
+    return request({
+      url: '/menus/update',
+      method: 'post',
+      data
     });
   },
   // 获取 菜单 列表
