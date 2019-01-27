@@ -3,7 +3,7 @@ import router from './router';
 import NProgress from 'nprogress'; // progress bar
 import 'nprogress/nprogress.css'; // progress bar style
 import { getToken, getCookie } from '@/utils/auth'; // getToken from cookie
-import { checkMenus, setUserInfoToStore } from '@/utils/checkMenus';
+import { checkMenus, setUserInfoToStore, is404 } from '@/utils/checkMenus';
 
 NProgress.configure({ showSpinner: false }); // NProgress Configuration
 
@@ -17,9 +17,12 @@ router.beforeEach((to, from, next) => {
   NProgress.start(); // 开始进度条
   const access_token = getToken();
   const userId = getCookie('userId');
+  console.log(router);
   // 如果在白名单里，则直接进入
   if (whiteList.indexOf(to.path) > -1) {
     next();
+  } else if (is404(to.path, router.options.routes)) {
+    next('/404');
   } else if (access_token && userId) { // determine if there has token
     setUserInfoToStore(to, next, router);
     if (to.path === '/login') {
