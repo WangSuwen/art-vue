@@ -47,6 +47,13 @@ const menusApi = {
       url: '/menus',
       method: 'get'
     });
+  },
+  // 删除 菜单 列表
+  delMenus() {
+    return request({
+      url: '/menus/delete',
+      method: 'post'
+    });
   }
 };
 export default menusApi;

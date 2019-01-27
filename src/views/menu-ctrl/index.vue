@@ -115,17 +115,30 @@ export default {
       });
   },
   methods: {
+    /**
+     * 弹出 菜单编辑弹框
+     */
     handleEdit(menuId) {
       this.editType = 'update';
       this.dialogFormVisible = true;
       this.editingMenu = this.menus.find(menu => menu._id === menuId);
     },
-    handleDelete(index, row) {
-      console.log(index, row);
+    /**
+     * 删除 菜单
+     */
+    handleDelete(menuId) {
+      menusApi.delMenus(menuId)
+        .then(result => {
+          debugger
+          console.log(result);
+        })
+        .catch(e => {
+          console.error(e);
+        });
     },
     addMenu() {
       this.editType = 'add';
-      this.editingMenu = emptyMenu;
+      this.editingMenu = JSON.parse(JSON.stringify(emptyMenu));
       this.dialogFormVisible = true;
     },
     /**
