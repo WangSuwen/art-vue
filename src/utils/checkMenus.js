@@ -56,10 +56,13 @@ export function is404(currentRouter, routers) {
   let is404 = true;
   let reg;
   for (let i = 0; i < routers.length; i++) {
-    reg = new RegExp(routers[i].path);
+    routers[i].path ? reg = new RegExp(routers[i].path) : '';
     if (!routers[i].path) {
-      new RegExp(routers[i].redirect).test(currentRouter) ? is404 = false : '';
-      break;
+      if (currentRouter === '/dashboard') {
+        is404 = false;
+        break;
+      }
+      continue;
     } else if (reg.test(currentRouter)) {
       is404 = false;
       break;

@@ -110,7 +110,38 @@ export const constantRouterMap = [{
       component: _import('menu-ctrl/index'),
       name: 'menu-ctrl-user-menus',
       meta: {
-        title: '用户权限菜单',
+        title: '菜单权限管理',
+        icon: 'international',
+        noCache: true
+      }
+    }
+  ]
+},
+{
+  path: '/user-ctrl',
+  component: Layout,
+  meta: {
+    title: '用户管理',
+    icon: 'international',
+    noCache: true
+  },
+  children: [
+    {
+      path: 'index',
+      component: _import('menu-ctrl/index'),
+      name: 'user-ctrl-index',
+      meta: {
+        title: '用户管理',
+        icon: 'international',
+        noCache: true
+      }
+    },
+    {
+      path: 'user-menus',
+      component: _import('menu-ctrl/index'),
+      name: 'user-ctrl-edit',
+      meta: {
+        title: '用户权限管理',
         icon: 'international',
         noCache: true
       }
@@ -160,163 +191,164 @@ export const constantRouterMap = [{
   component: _import('errorPage/401'),
   hidden: true
 }
-  /* {
-    path: '/permission',
-    component: Layout,
-    redirect: '/permission/index',
-    meta: { roles: ['admin'] }, // you can set roles in root nav
-    children: [{
-      path: 'index',
-      component: _import('permission/index'),
-      name: 'permission',
-      meta: {
-        title: 'permission',
-        icon: 'lock',
-        roles: ['admin'] // or you can only set roles in sub nav
-      }
-    }]
-  },
+// {
+//     path: '/permission',
+//     component: Layout,
+//     redirect: '/permission/index',
+//     meta: { roles: ['admin'] }, // you can set roles in root nav
+//     children: [{
+//       path: 'index',
+//       component: _import('permission/index'),
+//       name: 'permission',
+//       meta: {
+//         title: 'permission',
+//         icon: 'lock',
+//         roles: ['admin'] // or you can only set roles in sub nav
+//       }
+//     }]
+//   },
 
-  {
-    path: '/icon',
-    component: Layout,
-    children: [{
-      path: 'index',
-      component: _import('svg-icons/index'),
-      name: 'icons',
-      meta: { title: 'icons', icon: 'icon', noCache: true }
-    }]
-  },
+//   {
+//     path: '/icon',
+//     component: Layout,
+//     children: [{
+//       path: 'index',
+//       component: _import('svg-icons/index'),
+//       name: 'icons',
+//       meta: { title: 'icons', icon: 'icon', noCache: true }
+//     }]
+//   },
 
-  {
-    path: '/charts',
-    component: Layout,
-    redirect: 'noredirect',
-    name: 'charts',
-    meta: {
-      title: 'charts',
-      icon: 'chart'
-    },
-    children: [
-      { path: 'keyboard', component: _import('charts/keyboard'), name: 'keyboardChart', meta: { title: 'keyboardChart', noCache: true }},
-      { path: 'line', component: _import('charts/line'), name: 'lineChart', meta: { title: 'lineChart', noCache: true }},
-      { path: 'mixchart', component: _import('charts/mixChart'), name: 'mixChart', meta: { title: 'mixChart', noCache: true }}
-    ]
-  },
+//   {
+//     path: '/charts',
+//     component: Layout,
+//     redirect: 'noredirect',
+//     name: 'charts',
+//     meta: {
+//       title: 'charts',
+//       icon: 'chart'
+//     },
+//     children: [
+//       { path: 'keyboard', component: _import('charts/keyboard'), name: 'keyboardChart', meta: { title: 'keyboardChart', noCache: true }},
+//       { path: 'line', component: _import('charts/line'), name: 'lineChart', meta: { title: 'lineChart', noCache: true }},
+//       { path: 'mixchart', component: _import('charts/mixChart'), name: 'mixChart', meta: { title: 'mixChart', noCache: true }}
+//     ]
+//   },
 
-  {
-    path: '/example',
-    component: Layout,
-    redirect: '/example/table/complex-table',
-    name: 'example',
-    meta: {
-      title: 'example',
-      icon: 'example'
-    },
-    children: [
-      {
-        path: '/example/table',
-        component: _import('example/table/index'),
-        redirect: '/example/table/complex-table',
-        name: 'Table',
-        meta: {
-          title: 'Table',
-          icon: 'table'
-        },
-        children: [
-          { path: 'dynamic-table', component: _import('example/table/dynamicTable/index'), name: 'dynamicTable', meta: { title: 'dynamicTable' }},
-          { path: 'drag-table', component: _import('example/table/dragTable'), name: 'dragTable', meta: { title: 'dragTable' }},
-          { path: 'inline-edit-table', component: _import('example/table/inlineEditTable'), name: 'inlineEditTable', meta: { title: 'inlineEditTable' }},
-          { path: 'tree-table', component: _import('example/table/treeTable/treeTable'), name: 'treeTableDemo', meta: { title: 'treeTable' }},
-          { path: 'custom-tree-table', component: _import('example/table/treeTable/customTreeTable'), name: 'customTreeTableDemo', meta: { title: 'customTreeTable' }},
-          { path: 'complex-table', component: _import('example/table/complexTable'), name: 'complexTable', meta: { title: 'complexTable' }}
-        ]
-      },
-      { path: 'tab/index', icon: 'tab', component: _import('example/tab/index'), name: 'tab', meta: { title: 'tab' }}
-    ]
-  },
+//   {
+//     path: '/example',
+//     component: Layout,
+//     redirect: '/example/table/complex-table',
+//     name: 'example',
+//     meta: {
+//       title: 'example',
+//       icon: 'example'
+//     },
+//     children: [
+//       {
+//         path: '/example/table',
+//         component: _import('example/table/index'),
+//         redirect: '/example/table/complex-table',
+//         name: 'Table',
+//         meta: {
+//           title: 'Table',
+//           icon: 'table'
+//         },
+//         children: [
+//           { path: 'dynamic-table', component: _import('example/table/dynamicTable/index'), name: 'dynamicTable', meta: { title: 'dynamicTable' }},
+//           { path: 'drag-table', component: _import('example/table/dragTable'), name: 'dragTable', meta: { title: 'dragTable' }},
+//           { path: 'inline-edit-table', component: _import('example/table/inlineEditTable'), name: 'inlineEditTable', meta: { title: 'inlineEditTable' }},
+//           { path: 'tree-table', component: _import('example/table/treeTable/treeTable'), name: 'treeTableDemo', meta: { title: 'treeTable' }},
+//           { path: 'custom-tree-table', component: _import('example/table/treeTable/customTreeTable'), name: 'customTreeTableDemo', meta: { title: 'customTreeTable' }},
+//           { path: 'complex-table', component: _import('example/table/complexTable'), name: 'complexTable', meta: { title: 'complexTable' }}
+//         ]
+//       },
+//       { path: 'tab/index', icon: 'tab', component: _import('example/tab/index'), name: 'tab', meta: { title: 'tab' }}
+//     ]
+//   },
 
-  {
-    path: '/form',
-    component: Layout,
-    redirect: 'noredirect',
-    name: 'form',
-    meta: {
-      title: 'form',
-      icon: 'form'
-    },
-    children: [
-      { path: 'create-form', component: _import('form/create'), name: 'createForm', meta: { title: 'createForm', icon: 'table' }},
-      { path: 'edit-form', component: _import('form/edit'), name: 'editForm', meta: { title: 'editForm', icon: 'table' }}
-    ]
-  },
+//   {
+//     path: '/form',
+//     component: Layout,
+//     redirect: 'noredirect',
+//     name: 'form',
+//     meta: {
+//       title: 'form',
+//       icon: 'form'
+//     },
+//     children: [
+//       { path: 'create-form', component: _import('form/create'), name: 'createForm', meta: { title: 'createForm', icon: 'table' }},
+//       { path: 'edit-form', component: _import('form/edit'), name: 'editForm', meta: { title: 'editForm', icon: 'table' }}
+//     ]
+//   },
 
-  {
-    path: '/error',
-    component: Layout,
-    redirect: 'noredirect',
-    name: 'errorPages',
-    meta: {
-      title: 'errorPages',
-      icon: '404'
-    },
-    children: [
-      { path: '401', component: _import('errorPage/401'), name: 'page401', meta: { title: 'page401', noCache: true }},
-      { path: '404', component: _import('errorPage/404'), name: 'page404', meta: { title: 'page404', noCache: true }}
-    ]
-  },
+//   {
+//     path: '/error',
+//     component: Layout,
+//     redirect: 'noredirect',
+//     name: 'errorPages',
+//     meta: {
+//       title: 'errorPages',
+//       icon: '404'
+//     },
+//     children: [
+//       { path: '401', component: _import('errorPage/401'), name: 'page401', meta: { title: 'page401', noCache: true }},
+//       { path: '404', component: _import('errorPage/404'), name: 'page404', meta: { title: 'page404', noCache: true }}
+//     ]
+//   },
 
-  {
-    path: '/error-log',
-    component: Layout,
-    redirect: 'noredirect',
-    children: [{ path: 'log', component: _import('errorLog/index'), name: 'errorLog', meta: { title: 'errorLog', icon: 'bug' }}]
-  },
+//   {
+//     path: '/error-log',
+//     component: Layout,
+//     redirect: 'noredirect',
+//     children: [{ path: 'log', component: _import('errorLog/index'), name: 'errorLog', meta: { title: 'errorLog', icon: 'bug' }}]
+//   },
 
-  {
-    path: '/excel',
-    component: Layout,
-    redirect: '/excel/export-excel',
-    name: 'excel',
-    meta: {
-      title: 'excel',
-      icon: 'excel'
-    },
-    children: [
-      { path: 'export-excel', component: _import('excel/exportExcel'), name: 'exportExcel', meta: { title: 'exportExcel' }},
-      { path: 'export-selected-excel', component: _import('excel/selectExcel'), name: 'selectExcel', meta: { title: 'selectExcel' }},
-      { path: 'upload-excel', component: _import('excel/uploadExcel'), name: 'uploadExcel', meta: { title: 'uploadExcel' }}
-    ]
-  },
+//   {
+//     path: '/excel',
+//     component: Layout,
+//     redirect: '/excel/export-excel',
+//     name: 'excel',
+//     meta: {
+//       title: 'excel',
+//       icon: 'excel'
+//     },
+//     children: [
+//       { path: 'export-excel', component: _import('excel/exportExcel'), name: 'exportExcel', meta: { title: 'exportExcel' }},
+//       { path: 'export-selected-excel', component: _import('excel/selectExcel'), name: 'selectExcel', meta: { title: 'selectExcel' }},
+//       { path: 'upload-excel', component: _import('excel/uploadExcel'), name: 'uploadExcel', meta: { title: 'uploadExcel' }}
+//     ]
+//   },
 
-  {
-    path: '/zip',
-    component: Layout,
-    redirect: '/zip/download',
-    alwaysShow: true,
-    meta: { title: 'zip', icon: 'zip' },
-    children: [{ path: 'download', component: _import('zip/index'), name: 'exportZip', meta: { title: 'exportZip' }}]
-  },
+//   {
+//     path: '/zip',
+//     component: Layout,
+//     redirect: '/zip/download',
+//     alwaysShow: true,
+//     meta: { title: 'zip', icon: 'zip' },
+//     children: [{ path: 'download', component: _import('zip/index'), name: 'exportZip', meta: { title: 'exportZip' }}]
+//   },
 
-  {
-    path: '/theme',
-    component: Layout,
-    redirect: 'noredirect',
-    children: [{ path: 'index', component: _import('theme/index'), name: 'theme', meta: { title: 'theme', icon: 'theme' }}]
-  },
+//   {
+//     path: '/theme',
+//     component: Layout,
+//     redirect: 'noredirect',
+//     children: [{ path: 'index', component: _import('theme/index'), name: 'theme', meta: { title: 'theme', icon: 'theme' }}]
+//   },
 
-  {
-    path: '/clipboard',
-    component: Layout,
-    redirect: 'noredirect',
-    children: [{ path: 'index', component: _import('clipboard/index'), name: 'clipboardDemo', meta: { title: 'clipboardDemo', icon: 'clipboard' }}]
-  },
+//   {
+//     path: '/clipboard',
+//     component: Layout,
+//     redirect: 'noredirect',
+//     children: [{ path: 'index', component: _import('clipboard/index'), name: 'clipboardDemo', meta: { title: 'clipboardDemo', icon: 'clipboard' }}]
+//   },
 
-  {
-    path: '/i18n',
-    component: Layout,
-    children: [{ path: 'index', component: _import('i18n-demo/index'), name: 'i18n', meta: { title: 'i18n', icon: 'international' }}]
-  }, */
+//   {
+//     path: '/i18n',
+//     component: Layout,
+//     children: [{ path: 'index', component: _import('i18n-demo/index'), name: 'i18n', meta: { title: 'i18n', icon: 'international' }}]
+//   },
+
 ];
 
 export default new Router({
