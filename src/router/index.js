@@ -128,17 +128,17 @@ export const constantRouterMap = [{
   children: [
     {
       path: 'index',
-      component: _import('menu-ctrl/index'),
+      component: _import('user-ctrl/index'),
       name: 'user-ctrl-index',
       meta: {
-        title: '用户管理',
+        title: '用户列表',
         icon: 'international',
         noCache: true
       }
     },
     {
       path: 'user-menus',
-      component: _import('menu-ctrl/index'),
+      component: _import('user-ctrl/index'),
       name: 'user-ctrl-edit',
       meta: {
         title: '用户权限管理',

@@ -4,23 +4,23 @@
       <el-button
         type="primary"
         @click="addMenu"
-      >添加菜单项</el-button>
+      >添加用户</el-button>
     </el-row>
     <el-table
-      :data="menus"
+      :data="users"
       style="width: 90%;margin-left: 15px;margin-top: 15px;"
       :stripe="true"
       :border="true"
       empty-text="暂无数据"
     >
       <el-table-column
-        label="菜单名称"
-        prop="menuName"
+        label="用户名"
+        prop="name"
       >
       </el-table-column>
       <el-table-column
-        label="菜单值"
-        prop="menuValue"
+        label="密码"
+        prop="password"
       >
       </el-table-column>
       <el-table-column
@@ -46,11 +46,11 @@
             <el-form-item label="ID">
               <span>{{ props.row._id }}</span>
             </el-form-item>
-            <el-form-item label="菜单名称">
-              <span>{{ props.row.menuName }}</span>
+            <el-form-item label="用户名">
+              <span>{{ props.row.name }}</span>
             </el-form-item>
-            <el-form-item label="菜单路径">
-              <span>{{ props.row.menuValue }}</span>
+            <el-form-item label="密码">
+              <span>{{ props.row.password }}</span>
             </el-form-item>
             <el-form-item label="创建时间">
               <span>{{ props.row.createdAt }}</span>
@@ -64,20 +64,20 @@
     </el-table>
     <!--弹出层 Start-->
     <el-dialog
-      :title="editType === 'add' ? '添加菜单' : '编辑菜单'"
+      :title="editType === 'add' ? '添加用户' : '编辑用户'"
       :visible.sync="dialogFormVisible"
     >
-      <el-form :model="editingMenu" :inline="true">
-        <el-form-item label="菜单名称" label-width="80px">
-          <el-input autoComplete="off" v-model="editingMenu.menuName"></el-input>
+      <el-form :model="editingUser" :inline="true">
+        <el-form-item label="用户名" label-width="80px">
+          <el-input autoComplete="off" v-model="editingUser.name"></el-input>
         </el-form-item>
-        <el-form-item label="菜单路径" label-width="80px">
-          <el-input autoComplete="off" v-model="editingMenu.menuValue"></el-input>
+        <el-form-item label="密码" label-width="80px">
+          <el-input autoComplete="off" v-model="editingUser.password"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="menuOption">确 定</el-button>
+        <el-button type="primary" @click="userOption">确 定</el-button>
       </div>
     </el-dialog>
     <!--弹出层 End-->
@@ -85,11 +85,11 @@
 </template>
 
 <script>
-import menusApi from '@/api/menus';
-const emptyMenu = {
+import { getUserList } from '@/api/user';
+const emptyUser = {
   _id: '',
-  menuName: '',
-  menuValue: ''
+  name: '',
+  password: ''
 };
 
 export default {
@@ -97,18 +97,18 @@ export default {
     return {
       editType: 'add', // 操作类型 add：添加；update：编辑
       dialogFormVisible: false,
-      editingMenu: {
+      editingUser: {
         _id: '',
-        menuName: '',
-        menuValue: ''
+        name: '',
+        password: ''
       },
-      menus: []
+      users: []
     }
   },
   created() {
-    menusApi.getMenus()
+    getUserList()
       .then(result => {
-        this.menus = result;
+        this.users = result.list;
       })
       .catch(e => {
         console.error(e);
@@ -116,19 +116,20 @@ export default {
   },
   methods: {
     /**
-     * 弹出 菜单编辑弹框
+     * 弹出 用户编辑弹框
      */
-    handleEdit(menuId) {
+    handleEdit(userId) {
       this.editType = 'update';
       this.dialogFormVisible = true;
-      this.editingMenu = this.menus.find(menu => menu._id === menuId);
+      this.editingUser = this.users.find(user => user._id === userId);
     },
     /**
-     * 删除 菜单
+     * 删除 用户
      */
-    handleDelete(menuId) {
-      menusApi.delMenus(menuId)
+    handleDelete(userId) {
+      delMenus(userId)
         .then(result => {
+          debugger
           console.log(result);
         })
         .catch(e => {
@@ -137,24 +138,24 @@ export default {
     },
     addMenu() {
       this.editType = 'add';
-      this.editingMenu = JSON.parse(JSON.stringify(emptyMenu));
+      this.editingUser = JSON.parse(JSON.stringify(emptyUser));
       this.dialogFormVisible = true;
     },
     /**
-     * 添加或修改菜单
+     * 添加或修改用户
      */
-    menuOption() {
-      const func = this.editType === 'add' ? menusApi.addMenus : menusApi.updateMenu;
-      func(this.editingMenu)
+    userOption() {
+      const func = this.editType === 'add' ? addMenus : updateMenu;
+      func(this.editingUser)
         .then(result => {
           this.dialogFormVisible = false;
           if (this.editType === 'add') {
-            this.menus.push(result);
+            this.users.push(result);
           } else {
-            for (let i = 0; i < this.menus.length; i++) {
-              if (this.menus[i]._id === this.editingMenu._id) {
-                this.menus[i].menuName = this.editingMenu.menuName;
-                this.menus[i].menuValue = this.editingMenu.menuValue;
+            for (let i = 0; i < this.users.length; i++) {
+              if (this.users[i]._id === this.editingUser._id) {
+                this.users[i].name = this.editingUser.name;
+                this.users[i].password = this.editingUser.password;
                 break;
               }
             }
