@@ -14,8 +14,13 @@
       empty-text="暂无数据"
     >
       <el-table-column
-        label="用户名"
+        label="姓名"
         prop="name"
+      >
+      </el-table-column>
+      <el-table-column
+        label="用户名"
+        prop="username"
       >
       </el-table-column>
       <el-table-column
@@ -46,8 +51,11 @@
             <el-form-item label="ID">
               <span>{{ props.row._id }}</span>
             </el-form-item>
-            <el-form-item label="用户名">
+            <el-form-item label="姓名">
               <span>{{ props.row.name }}</span>
+            </el-form-item>
+            <el-form-item label="用户名">
+              <span>{{ props.row.username }}</span>
             </el-form-item>
             <el-form-item label="密码">
               <span>{{ props.row.password }}</span>
@@ -68,8 +76,11 @@
       :visible.sync="dialogFormVisible"
     >
       <el-form :model="editingUser" :inline="true">
-        <el-form-item label="用户名" label-width="80px">
+        <el-form-item label="姓名" label-width="80px">
           <el-input autoComplete="off" v-model="editingUser.name"></el-input>
+        </el-form-item>
+        <el-form-item label="用户名" label-width="80px">
+          <el-input autoComplete="off" v-model="editingUser.username"></el-input>
         </el-form-item>
         <el-form-item label="密码" label-width="80px">
           <el-input autoComplete="off" v-model="editingUser.password"></el-input>
@@ -89,6 +100,7 @@ import { getUserList } from '@/api/user';
 const emptyUser = {
   _id: '',
   name: '',
+  username: '',
   password: ''
 };
 
@@ -100,6 +112,7 @@ export default {
       editingUser: {
         _id: '',
         name: '',
+        username: '',
         password: ''
       },
       users: []
@@ -155,6 +168,7 @@ export default {
             for (let i = 0; i < this.users.length; i++) {
               if (this.users[i]._id === this.editingUser._id) {
                 this.users[i].name = this.editingUser.name;
+                this.users[i].username = this.editingUser.username;
                 this.users[i].password = this.editingUser.password;
                 break;
               }

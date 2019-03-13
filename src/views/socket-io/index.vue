@@ -101,7 +101,7 @@ export default {
   created() {
     // 获取 用户列表
     getUserList().then(users => {
-      this.userList = users.list;
+      this.formatUserList(users.list);
       this.currentPage = users.currentPage;
     });
   },
@@ -112,6 +112,11 @@ export default {
     });
   },
   methods: {
+    formatUserList (userList) {
+      userList.forEach(user => {
+        this.userList[user._id] = user;
+      });
+    },
     /**
      * 接收到其他用户发来的信息
      * @param {Object} msg
