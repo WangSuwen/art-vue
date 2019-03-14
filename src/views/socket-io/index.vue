@@ -101,7 +101,7 @@ export default {
   created() {
     // 获取 用户列表
     getUserList().then(users => {
-      this.formatUserList(users.list);
+      this.userList = this.formatUserList(users.list);
       this.currentPage = users.currentPage;
     });
   },
@@ -113,9 +113,11 @@ export default {
   },
   methods: {
     formatUserList (userList) {
+      const userListObj = {};
       userList.forEach(user => {
-        this.userList[user._id] = user;
+        userListObj[user._id] = user;
       });
+      return userListObj;
     },
     /**
      * 接收到其他用户发来的信息
@@ -166,7 +168,7 @@ export default {
     // 设置 消息列表
     setUsersMsg (receiveUserId, msgObj) {
       if (this.usersMsgs[receiveUserId] && this.usersMsgs[receiveUserId]['msgs'].length) {
-        this.usersMsgs[receiveUserId] && this.usersMsgs[receiveUserId]['msgs'].push(msgObj);
+        this.usersMsgs[receiveUserId]['msgs'].push(msgObj);
       } else {
         this.usersMsgs[receiveUserId] = { msgs: [msgObj] };
       }
