@@ -179,7 +179,7 @@ export default {
      * 用于设置用户未读消息数
      */
     newMsg(newVal) {
-      console.log(newVal);
+      console.log(123456789);
       const oldThisUserList = JSON.parse(JSON.stringify(this.userList));
       if (oldThisUserList[newVal.sendUserId] && oldThisUserList[newVal.sendUserId]['unReadCount'] !== undefined) {
         oldThisUserList[newVal.sendUserId]['unReadCount'] >= 99 ? '99+' : oldThisUserList[newVal.sendUserId]['unReadCount']++;
