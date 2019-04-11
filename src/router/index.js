@@ -149,6 +149,27 @@ export const constantRouterMap = [{
   ]
 },
 {
+  path: '/shounaerapi-ctrl',
+  component: Layout,
+  meta: {
+    title: '收哪儿API管理',
+    icon: 'international',
+    noCache: true
+  },
+  children: [
+    {
+      path: 'index',
+      component: _import('shounaerapi-ctrl/index'),
+      name: 'shounaerapi-ctrl-index',
+      meta: {
+        title: 'API列表',
+        icon: 'international',
+        noCache: true
+      }
+    }
+  ]
+},
+{
   path: '/login',
   component: _import('login/index'),
   hidden: true
